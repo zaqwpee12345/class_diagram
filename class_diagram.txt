@@ -1,0 +1,224 @@
+@startuml
+class Member {
+- id: String?                   
+- memFullname: String?   
+- memUsername: String?
+- memPassword: String?
+- memEmail: String?
+- memAge: String? 
+- massage: String?
+ \
++ Member()
++ Member(json: Map<String, dynamic>)
++ toJson(): Map<String, dynamic> 
+}
+
+class Nodemcu_write{
+- massage: String?
+- id: String?
+- tdsValue: String?  
+- temperatureCelsius: String? 
+- phValue: String? 
+- Date: String?
+- Time: String?
+- latitude: double? 
+- longtitude: double? 
+\
++ Nodemcu_write()  
++ Nodemcu_write(json: Map<String, dynamic>)
+ + toJson(): Map<String, dynamic>
+
+}
+class callAPIdatanodemcu{
+
++ getallAPI(): Future<List<Nodemcu_write>>
+
+}
+
+class  CallMemberAPI{
+
++ loginAPI(member: Member): Future<Member> 
+
+}
+
+class Env{
+- apiURL: String
+- urlApi: String
+ - URLAPI: String
+ - URLAPIMap: String              
+
+}
+class Home3UI {
++ key: Key?
+
++ createState(): _Home3UIState
+
+}
+class _Home3UIState{
+- nodemcuList: Future<List<Nodemcu_write>>?
+
++ initState(): void
++ build(context: BuildContext): Widget
++ getCallApiGetAll(): void
+}
+Home3UI-->_Home3UIState
+
+class  LoginUI {
+- key: Key?
++ createState(): _LoginUIState 
+
+
+}
+class  _LoginUIState{
+- memUsernameCtrl: TextEditingController
+- memPasswordCtrl: TextEditingController
+- rememberCheckboxValue: bool
+- member: Member? 
++ initState(): void
++ build(context: BuildContext): Widget
++ checkLogin(): Future<Member>
++ saveCredentials(): void
++ retrieveCredentials(): void
++ showWarningDialog(context, msg): void
+}
+
+ LoginUI --> _LoginUIState
+
+class  MapSample {
+ - key: Key? 
++ createState(): MapSampleState
+
+}
+class MapSampleState{
+- _controller: Completer<GoogleMapController>
+- _kGooglePlex: CameraPosition (static)
+- _markers: Set<Marker>
++ build(context: BuildContext): Widget 
+
+}
+MapSample-->MapSampleState
+class   PhUI{
+- key: Key?
++ createState(): _PhUIState
+}
+
+class  _PhUIState{
+- nodemcuList: Future<List<Nodemcu_write>>?
+ + initState(): void 
++ build(context: BuildContext): Widget
++ getCallApiGetAll(): void
++ _refreshData(): void
+
+}
+PhUI-->_PhUIState
+
+class RegisterUI1{
+ - key: Key? 
+ + createState(): _RegisterUI1State
+
+}
+class _RegisterUI1State{
+- memFullnameCtrl: TextEditingController
+- memUsernameCtrl: TextEditingController
+- memEmailCtrl: TextEditingController
+- memPasswordCtrl: TextEditingController
+- memAgeCtrl: TextEditingController
+ - passwordShowFlag: bool
++ initState(): void   
++ build(context: BuildContext): Widget
++ sign_up(): Future<void>
++ showWarningDialog(context, msg): Future<void>
++ showCompreateDialog(context, msg): Future<void>
+}
+RegisterUI1-->_RegisterUI1State
+class  SplashScreenUI{
+- key: Key?  
+ + createState(): _SplashScreenUIState
+
+}
+class _SplashScreenUIState{
++ initState(): void
++ build(context: BuildContext): Widget
+}
+SplashScreenUI--> _SplashScreenUIState
+
+class TDSUI{
+- key: Key? 
++ createState(): _TDSUIState 
+}
+class  _TDSUIState {
+- nodemcuList: Future<List<Nodemcu_write>>?
++ initState(): void  
++ build(context: BuildContext): Widget
++ getCallApiGetAll(): void
++ _refreshData(): void 
+}
+TDSUI--> _TDSUIState
+
+class  TempUI{
+ - key: Key?
++ createState(): _TempUIState
+}
+
+class  _TempUIState{
+- nodemcuList: Future<List<Nodemcu_write>>?
++ initState(): void 
++ build(context: BuildContext): Widget
+ + getCallApiGetAll(): void
++ _refreshData(): void           
+}
+TempUI-->_TempUIState
+class HomeUI {
+- member: Member?
++ createState(): _HomeUIState
+}
+class  _HomeUIState{
+ - _timer: Timer? 
+- nodemcuList: Future<List<Nodemcu_write>>?
++ initState(): void
++ dispose(): void
++ build(context: BuildContext): Widget
++ getCallApiGetAll(): void 
+ + _refreshData(): void  
+
+}
+HomeUI--> _HomeUIState
+
+class  main{
+ runApp(MaterialApp)
+}
+
+class MaterialApp{
+- debugShowCheckedModeBanner: false
+- home: SplashScreenUI
+
+}
+
+main-->MaterialApp
+SplashScreenUI-->main
+HomeUI->TDSUI
+HomeUI-->TempUI
+HomeUI->PhUI
+LoginUI-->HomeUI
+MaterialApp-->RegisterUI1
+LoginUI<--MaterialApp
+HomeUI-->Home3UI
+HomeUI->MapSample
+Member-->CallMemberAPI
+Nodemcu_write-->callAPIdatanodemcu
+callAPIdatanodemcu-->Env
+CallMemberAPI-->Env
+_RegisterUI1State-->Member
+
+_LoginUIState-->Member
+
+ _HomeUIState-->Nodemcu_write
+
+_TempUIState-->Nodemcu_write
+
+ _TDSUIState -->Nodemcu_write
+
+_PhUIState-->Nodemcu_write
+
+ _Home3UIState-->Nodemcu_write
+@enduml
