@@ -1,7 +1,5 @@
-# แอฟพลิเคชั่น สายด่วน191
+# Class Diagram
 ### Created by: นายพงศภัค เพียรชระ 
-### complete date: 21 มีนาคม 2566 
-### Dev by: flutter/Dart/VS-Code
 *** 
 <table>
     <tr>
